@@ -3,11 +3,8 @@
 :root {
   font-family: "DM Sans", sans-serif;
 	line-height: 1.5;
-
-	color-scheme: light dark;
 	color: #FFF;
 	background-color: #080808;
-
 	font-synthesis: none;
 	text-rendering: optimizeLegibility;
 	-webkit-font-smoothing: antialiased;
@@ -179,17 +176,4 @@ ul {
 	padding: 1rem;
 	border-radius: 1rem;
 	background-color: var(--gray-color);
-}
-
-@media (prefers-color-scheme: light) {
-	:root {
-		color: #213547;
-		background-color: #ffffff;
-	}
-	a:hover {
-		color: #747bff;
-	}
-	button {
-		background-color: #f9f9f9;
-	}
 }
