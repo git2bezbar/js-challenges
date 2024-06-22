@@ -1,0 +1,10 @@
+@import '../../assets/colors.module.css';
+
+.chip {
+	background-color: var(--dark-gray-color);
+	color: var(--white-color);
+	border-radius: 999px;
+	font-size: 12px;
+	display: flex;
+	padding: .5rem 1rem;
+}
