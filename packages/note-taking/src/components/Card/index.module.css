@@ -1,0 +1,33 @@
+@import '../../assets/colors.module.css';
+
+a.card {
+	background-color: var(--dark-gray-color);
+	color: var(--white-color);
+	border-radius: 999px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0.5rem;
+	padding: 1rem 1.5rem;
+	text-decoration: none;
+	transition: 0.3s;
+
+	&:hover {
+		background-color: var(--gray-color);
+		color: var(--white-color);
+	}
+
+}
+
+h2 {
+	font-size: 1.25rem;
+	margin: 0;
+	display: flex;
+}
+
+p {
+	margin: 0;
+	color: var(--light-gray-color);
+	font-size: .75rem;
+	text-align: right;
+}
