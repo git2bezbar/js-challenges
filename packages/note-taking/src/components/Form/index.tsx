@@ -88,6 +88,7 @@ export default function Form({
 				<input
 					type="text"
 					id="title"
+					data-testid="titleInput"
 					value={title}
 					onChange={(event) => { setTitle(event.target.value) }}
 				/>
@@ -97,6 +98,7 @@ export default function Form({
 				<textarea
 					ref={textAreaRef}
 					id="description"
+					data-testid="descriptionInput"
 					value={description}
 					onChange={(event) => {
 						setDescription(event.target.value)
@@ -107,7 +109,7 @@ export default function Form({
 					}}
 				/>
 			</div>
-			<button type="submit">
+			<button type="submit" data-testid="submitButton">
 				{ isCreating ? 'Add note' : 'Save changes' }
 			</button>
 			{

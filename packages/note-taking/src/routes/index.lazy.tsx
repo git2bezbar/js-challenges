@@ -19,7 +19,7 @@ function Index() {
 			<div className="titleWithButtons">
       	<h1>Notes</h1>
 				<Link to="/add">
-					<button data-type="primary">Add note</button>
+					<button data-type="primary" data-testid="addButton">Add note</button>
 				</Link>
 			</div>
 			<ul>
