@@ -176,4 +176,8 @@ ul {
 	padding: 1rem;
 	border-radius: 1rem;
 	background-color: var(--gray-color);
+
+	.wmde-markdown {
+		background-color: transparent;
+	}
 }
