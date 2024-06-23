@@ -26,8 +26,8 @@ function Edit() {
       <h1>My note</h1>
 			<Form
 				titleValue={note.title}
-				note_uuid={note_uuid}
 				descriptionValue={note.description}
+				note_uuid={note_uuid}
 				isCreating={false}
 			/>
     </div>

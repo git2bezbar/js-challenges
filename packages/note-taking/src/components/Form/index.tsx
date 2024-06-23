@@ -1,7 +1,6 @@
 
 import { useNavigate } from "@tanstack/react-router";
 import { useEffect, useRef, useState, type FormEvent } from "react"
-import { v4 as uuid } from 'uuid';
 
 import { useNoteStore } from "../../store/notes";
 
@@ -11,7 +10,7 @@ interface FormProps {
 	titleValue?: string
 	descriptionValue?: string
 	isCreating?: boolean
-	note_uuid?: string
+	note_uuid?: string | undefined
 }
 
 export default function Form({
@@ -63,7 +62,6 @@ export default function Form({
 		const note = {
 			title,
 			description,
-			uuid: isCreating ? uuid() : note_uuid,
 		};
 
 		try {

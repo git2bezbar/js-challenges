@@ -1,5 +1,6 @@
 import type { Note } from '../services/types';
 
+import { v4 as uuid } from 'uuid';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
@@ -18,6 +19,7 @@ export const useNoteStore = create<NoteState>()(
       addNote: (note: Note) => set((state: NoteState) => {
         note.createdAt = new Date();
         note.updatedAt = new Date();
+				note.uuid = uuid();
         return { notes: [...state.notes, note] };
       }),
       removeNote: (uuid: Note['uuid']) => set((state: NoteState) => ({
