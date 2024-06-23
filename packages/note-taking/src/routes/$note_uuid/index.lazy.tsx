@@ -39,13 +39,13 @@ function Single() {
 			<div className="flexContainer">
 				{ note.createdAt &&
 					<Chip>
-						Créé le { new Date(note.createdAt).toLocaleDateString() }
-						&nbsp;à { new Date(note.createdAt).toLocaleTimeString() }
+						Created { new Date(note.createdAt).toLocaleDateString() }
+						&nbsp;at { new Date(note.createdAt).toLocaleTimeString() }
 					</Chip> }
 				{ note.updatedAt &&
 					<Chip>
-						Modifié le { new Date(note.updatedAt).toLocaleDateString() }
-						&nbsp;à { new Date(note.updatedAt).toLocaleTimeString() }
+						Edited { new Date(note.updatedAt).toLocaleDateString() }
+						&nbsp;at { new Date(note.updatedAt).toLocaleTimeString() }
 					</Chip> }
 			</div>
 			<div className='flexContainer'>
