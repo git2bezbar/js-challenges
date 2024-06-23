@@ -11,6 +11,7 @@ a.card {
 	padding: 1rem 1.5rem;
 	text-decoration: none;
 	transition: 0.3s;
+	flex-wrap: wrap;
 
 	&:hover {
 		background-color: var(--gray-color);
@@ -30,4 +31,10 @@ p {
 	color: var(--light-gray-color);
 	font-size: .75rem;
 	text-align: right;
+}
+
+.infoContainer {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
 }
