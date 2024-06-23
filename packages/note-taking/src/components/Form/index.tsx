@@ -59,10 +59,7 @@ export default function Form({
 				}
 		}
 
-		const note = {
-			title,
-			description,
-		};
+		const note = { title, description };
 
 		try {
 			if (isCreating) {
@@ -70,7 +67,7 @@ export default function Form({
 				await navigate({ to: '/' });
 				return;
 			} else {
-				updateNote(note);
+				updateNote({...note, uuid: note_uuid});
 				await navigate({ to: `/${note_uuid}` });
 				return;
 			}
