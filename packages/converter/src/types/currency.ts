@@ -1,5 +1,3 @@
-export type CurrenciesList = Record<string, Currency>;
-
 export interface Currency {
 	symbol: string,
 	name: string,
@@ -11,6 +9,10 @@ export interface Currency {
 	type: string;
 }
 
-export interface APIResponse extends Response {
+export type CurrenciesList = Record<string, Currency>;
+
+export interface CurrencyResponse extends Response {
 	data: CurrenciesList;
 }
+
+export type CurrencyRate = Record<string, number>;
