@@ -1,43 +1,65 @@
-import type { APIResponse, CurrenciesList } from "./types";
+import type { CurrenciesList, CurrencyRate, CurrencyResponse } from "./types/currency";
 
 const apiUrl = import.meta.env.VITE_CONVERTER_API_URL;
 const apiKey = import.meta.env.VITE_CONVERTER_API_KEY;
 
-export const getCurrencies = async (): Promise<CurrenciesList> => {
-	const cache = await caches.open("currencies-cache");
-	const cachedResponse = await cache.match(`${apiUrl}/currencies?apikey=${apiKey}`);
+class CurrencyConverter {
+	private static instance: CurrencyConverter;
+	private exchangeRates: CurrencyRate;
 
-	if (cachedResponse) {
-		const { data } = await cachedResponse.json() as APIResponse;
+	private constructor() {
+		this.exchangeRates = {};
+	}
+
+	public static getInstance(): CurrencyConverter {
+		if (!CurrencyConverter.instance) {
+				CurrencyConverter.instance = new CurrencyConverter();
+		}
+		return CurrencyConverter.instance;
+	}
+
+	public async getCurrencies(): Promise<CurrenciesList> {
+		const cache = await caches.open("currencies-cache");
+		const cachedResponse = await cache.match(`${apiUrl}/currencies?apikey=${apiKey}`);
+
+		if (cachedResponse) {
+				const { data } = await cachedResponse.json() as CurrencyResponse;
+				return data;
+		}
+
+		const response = await fetch(`${apiUrl}/currencies?apikey=${apiKey}`);
+
+		if (!response.ok) {
+				throw new Error('Échec de la récupération des devises');
+		}
+
+		const { data } = await response.clone().json() as CurrencyResponse;
+		if (typeof data === 'object') {
+				await cache.put(`${apiUrl}/currencies?apikey=${apiKey}`, response.clone());
+		}
 		return data;
 	}
 
-	const response = await fetch(`${apiUrl}/currencies?apikey=${apiKey}`);
+	public async setExchangeRates(from: string, to: string): Promise<void> {
+		const response = await fetch(`${apiUrl}/latest?base_currency=${from}&currencies=${to}&apikey=${apiKey}`);
 
-	if (!response.ok) {
-		throw new Error('Échec de la récupération des devises');
+		if (!response.ok) {
+				throw new Error('Échec de la récupération des taux de change');
+		}
+
+		const { data } = await response.json() as { data: Record<string, number> };
+		this.exchangeRates = data;
 	}
 
-	const { data } = await response.clone().json() as APIResponse;
-	if (typeof data !== 'object') {
-		await cache.put(`${apiUrl}/currencies?apikey=${apiKey}`, data);
+	public async convertAmount(from: string, to: string, amount: number): Promise<number> {
+		await this.setExchangeRates(from, to);
+		const toRate = this.exchangeRates[to];
+		console.log(this.exchangeRates, toRate)
+		if (!toRate) {
+			throw new Error("Currency not supported");
+		}
+		return amount * toRate;
 	}
-	return data;
 }
 
-export const convertAmount = async (from: string, to: string, amount: number): Promise<number> => {
-	const response = await fetch(`${apiUrl}/latest?base_currency=${from}&currencies=${to}&apikey=${apiKey}`);
-
-	if (!response.ok) {
-		throw new Error('Échec de la récupération du dernier taux de change');
-	}
-
-	const { data } = await response.clone().json() as { data: Record<string, number> };
-	const latestExchangeRate = data[to];
-
-	if (!latestExchangeRate) {
-		throw new Error(`Impossible de trouver le taux de change pour la devise ${to}`);
-	}
-
-	return amount * latestExchangeRate;
-}
+export default CurrencyConverter;
