@@ -15,12 +15,12 @@
 				<form class="container-fluid">
 					<fieldset>
 						<label for="amount">Montant</label>
-						<input type="number" id="amount" name="amount" placeholder="Montant à convertir" aria-label="Number" value="100" />
+						<input type="number" id="amount" name="amount" placeholder="Montant à convertir" aria-label="Number" value="100" min="0" oninput="validity.valid||(value='0');" />
 					</fieldset>
 					<fieldset>
 						<label for="base-currency">Devise de base</label>
 						<select id="base-currency" name="base-currency" aria-label="Choisissez votre devise de base" required>
-							<option selected disabled value="">
+							<option selected disabled data-type="defaultOption" value="">
 								Choisissez votre devise de base
 							</option>
 						</select>
@@ -28,7 +28,7 @@
 					<fieldset>
 						<label for="target-currency">Devise cible</label>
 						<select id="target-currency" name="target-currency" aria-label="Choisissez votre devise cible" required>
-							<option selected disabled value="">
+							<option selected disabled data-type="defaultOption" value="">
 								Choisissez votre devise cible
 							</option>
 						</select>
