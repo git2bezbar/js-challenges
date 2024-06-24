@@ -10,19 +10,19 @@ interface FormProps {
 	titleValue?: string
 	descriptionValue?: string
 	isCreating?: boolean
-	note_uuid?: string | undefined
+	uuid?: string | undefined
 }
 
 export default function Form({
 	titleValue = '',
 	descriptionValue = '',
 	isCreating = true,
-	note_uuid = '',
+	uuid = '',
 }: FormProps) {
 	const textAreaRef = useRef<HTMLTextAreaElement>(null);
 	const [errorMessage, setErrorMessage] = useState('');
 	const navigate = useNavigate({
-		from: isCreating ? '/add' : '/$note_uuid/edit'
+		from: isCreating ? '/add' : '/$uuid/edit'
 	});
 	const [title, setTitle] = useState(titleValue);
   const [description, setDescription] = useState(descriptionValue);
@@ -47,7 +47,7 @@ export default function Form({
 		}
 
 		if (!isCreating) {
-			const currentNote = getNote(note_uuid);
+			const currentNote = getNote(uuid);
 			if (!currentNote) {
 				return;
 			}
@@ -67,8 +67,8 @@ export default function Form({
 				await navigate({ to: '/' });
 				return;
 			} else {
-				updateNote({...note, uuid: note_uuid});
-				await navigate({ to: `/${note_uuid}` });
+				updateNote({...note, uuid});
+				await navigate({ to: `/${uuid}` });
 				return;
 			}
 		} catch(error) {

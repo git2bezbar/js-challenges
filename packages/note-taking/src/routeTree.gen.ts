@@ -18,8 +18,8 @@ import { Route as rootRoute } from './routes/__root'
 
 const AddLazyImport = createFileRoute('/add')()
 const IndexLazyImport = createFileRoute('/')()
-const NoteuuidIndexLazyImport = createFileRoute('/$note_uuid/')()
-const NoteuuidEditLazyImport = createFileRoute('/$note_uuid/edit')()
+const UuidIndexLazyImport = createFileRoute('/$uuid/')()
+const UuidEditLazyImport = createFileRoute('/$uuid/edit')()
 
 // Create/Update Routes
 
@@ -33,19 +33,15 @@ const IndexLazyRoute = IndexLazyImport.update({
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
 
-const NoteuuidIndexLazyRoute = NoteuuidIndexLazyImport.update({
-  path: '/$note_uuid/',
+const UuidIndexLazyRoute = UuidIndexLazyImport.update({
+  path: '/$uuid/',
   getParentRoute: () => rootRoute,
-} as any).lazy(() =>
-  import('./routes/$note_uuid/index.lazy').then((d) => d.Route),
-)
+} as any).lazy(() => import('./routes/$uuid/index.lazy').then((d) => d.Route))
 
-const NoteuuidEditLazyRoute = NoteuuidEditLazyImport.update({
-  path: '/$note_uuid/edit',
+const UuidEditLazyRoute = UuidEditLazyImport.update({
+  path: '/$uuid/edit',
   getParentRoute: () => rootRoute,
-} as any).lazy(() =>
-  import('./routes/$note_uuid/edit.lazy').then((d) => d.Route),
-)
+} as any).lazy(() => import('./routes/$uuid/edit.lazy').then((d) => d.Route))
 
 // Populate the FileRoutesByPath interface
 
@@ -65,18 +61,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AddLazyImport
       parentRoute: typeof rootRoute
     }
-    '/$note_uuid/edit': {
-      id: '/$note_uuid/edit'
-      path: '/$note_uuid/edit'
-      fullPath: '/$note_uuid/edit'
-      preLoaderRoute: typeof NoteuuidEditLazyImport
+    '/$uuid/edit': {
+      id: '/$uuid/edit'
+      path: '/$uuid/edit'
+      fullPath: '/$uuid/edit'
+      preLoaderRoute: typeof UuidEditLazyImport
       parentRoute: typeof rootRoute
     }
-    '/$note_uuid/': {
-      id: '/$note_uuid/'
-      path: '/$note_uuid'
-      fullPath: '/$note_uuid'
-      preLoaderRoute: typeof NoteuuidIndexLazyImport
+    '/$uuid/': {
+      id: '/$uuid/'
+      path: '/$uuid'
+      fullPath: '/$uuid'
+      preLoaderRoute: typeof UuidIndexLazyImport
       parentRoute: typeof rootRoute
     }
   }
@@ -87,8 +83,8 @@ declare module '@tanstack/react-router' {
 export const routeTree = rootRoute.addChildren({
   IndexLazyRoute,
   AddLazyRoute,
-  NoteuuidEditLazyRoute,
-  NoteuuidIndexLazyRoute,
+  UuidEditLazyRoute,
+  UuidIndexLazyRoute,
 })
 
 /* prettier-ignore-end */
@@ -101,8 +97,8 @@ export const routeTree = rootRoute.addChildren({
       "children": [
         "/",
         "/add",
-        "/$note_uuid/edit",
-        "/$note_uuid/"
+        "/$uuid/edit",
+        "/$uuid/"
       ]
     },
     "/": {
@@ -111,11 +107,11 @@ export const routeTree = rootRoute.addChildren({
     "/add": {
       "filePath": "add.lazy.tsx"
     },
-    "/$note_uuid/edit": {
-      "filePath": "$note_uuid/edit.lazy.tsx"
+    "/$uuid/edit": {
+      "filePath": "$uuid/edit.lazy.tsx"
     },
-    "/$note_uuid/": {
-      "filePath": "$note_uuid/index.lazy.tsx"
+    "/$uuid/": {
+      "filePath": "$uuid/index.lazy.tsx"
     }
   }
 }

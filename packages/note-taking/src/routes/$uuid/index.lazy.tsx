@@ -7,20 +7,20 @@ import { useState } from 'react';
 import Chip from '../../components/Chip';
 import { useNoteStore } from '../../store/notes';
 
-export const Route = createLazyFileRoute('/$note_uuid/')({
+export const Route = createLazyFileRoute('/$uuid/')({
   component: Single,
 });
 
 function Single() {
 	const [isMarkdown, setIsMarkdown] = useState(false);
-	const { note_uuid }: { note_uuid: Note['uuid'] } = Route.useParams();
+	const { uuid }: { uuid: Note['uuid'] } = Route.useParams();
 	const { getNote, removeNote } = useNoteStore();
-	const note = getNote(note_uuid);
-	const navigate = useNavigate({ from: '/$note_uuid' });
+	const note = getNote(uuid);
+	const navigate = useNavigate({ from: '/$uuid' });
 
 	const deleteNote = async () => {
 		try {
-			removeNote(note_uuid);
+			removeNote(uuid);
 			await navigate({ to: '/' });
 		} catch (error) {
 			console.error(error);
@@ -50,7 +50,7 @@ function Single() {
 					</Chip> }
 			</div>
 			<div className='flexContainer'>
-				<Link to={`/${note_uuid}/edit`}>
+				<Link to={`/${uuid}/edit`}>
 					<button>Edit</button>
 				</Link>
 				<button data-type="danger" onClick={deleteNote}>Delete</button>
