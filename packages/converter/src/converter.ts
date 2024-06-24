@@ -54,7 +54,6 @@ class CurrencyConverter {
 	public async convertAmount(from: string, to: string, amount: number): Promise<number> {
 		await this.setExchangeRates(from, to);
 		const toRate = this.exchangeRates[to];
-		console.log(this.exchangeRates, toRate)
 		if (!toRate) {
 			throw new Error("Currency not supported");
 		}
