@@ -6,6 +6,7 @@ import { useState } from 'react';
 
 import Chip from '../../components/Chip';
 import { useNoteStore } from '../../store/notes';
+
 export const Route = createLazyFileRoute('/$note_uuid/')({
   component: Single,
 });
