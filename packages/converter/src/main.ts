@@ -1,6 +1,6 @@
-import type { CurrenciesList } from './types';
+import type { CurrenciesList } from './types/currency';
 
-import { convertAmount, getCurrencies } from './converter';
+import CurrencyConverter from './converter';
 import './style.css';
 import { formatCurrencyName } from './utils';
 
@@ -12,9 +12,11 @@ const firstCard = document.querySelector<HTMLDivElement>('article:first-of-type'
 const tableBody = document.querySelector<HTMLTableSectionElement>('tbody');
 let currenciesList: CurrenciesList = {};
 
-if (!!amountInput && !!baseCurrencySelect && !!targetCurrencySelect && !!submitButton && !!firstCard && !!tableBody) {
+const currencyConverter = CurrencyConverter.getInstance();
 
-	currenciesList = await getCurrencies();
+if (amountInput && baseCurrencySelect && targetCurrencySelect && submitButton && firstCard && tableBody) {
+
+	currenciesList = await currencyConverter.getCurrencies();
 	baseCurrencySelect.innerHTML += Object.entries(currenciesList).map(([code, currency]) =>
 		`<option value="${code}">${currency.name}</option>`).join('');
 	targetCurrencySelect.innerHTML += Object.entries(currenciesList).map(([code, currency]) =>
@@ -23,8 +25,17 @@ if (!!amountInput && !!baseCurrencySelect && !!targetCurrencySelect && !!submitB
 	const convertCurrency = async (event: Event) => {
 		event.preventDefault();
 		event.stopPropagation();
-		const result = await convertAmount(baseCurrencySelect.value, targetCurrencySelect.value, Number.parseFloat(amountInput.value))
-		renderResult(Number.parseFloat(amountInput.value), baseCurrencySelect.value, result, targetCurrencySelect.value);
+		const convertedAmount = await currencyConverter.convertAmount(
+			baseCurrencySelect.value,
+			targetCurrencySelect.value,
+			Number.parseFloat(amountInput.value)
+		)
+		renderResult(
+			Number.parseFloat(amountInput.value),
+			baseCurrencySelect.value,
+			convertedAmount,
+			targetCurrencySelect.value
+		);
 	}
 
 	const renderResult = (amount: number, baseCurrency: string, newAmount: number, targetCurrency: string) => {
