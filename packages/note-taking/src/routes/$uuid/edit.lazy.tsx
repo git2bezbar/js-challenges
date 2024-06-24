@@ -5,14 +5,14 @@ import { Link, createLazyFileRoute } from '@tanstack/react-router'
 import Form from '../../components/Form'
 import { useNoteStore } from '../../store/notes';
 
-export const Route = createLazyFileRoute('/$note_uuid/edit')({
+export const Route = createLazyFileRoute('/$uuid/edit')({
   component: Edit,
 })
 
 function Edit() {
-	const { note_uuid }: { note_uuid: Note['uuid'] } = Route.useParams();
+	const { uuid }: { uuid: Note['uuid'] } = Route.useParams();
 	const { getNote } = useNoteStore();
-	const note = getNote(note_uuid);
+	const note = getNote(uuid);
 
 	if (!note) {
 		return <NotFound />;
@@ -20,14 +20,14 @@ function Edit() {
 
   return (
     <div className="container">
-			<Link to={`/${note_uuid}`}>
+			<Link to={`/${uuid}`}>
 				<button data-type="secondary">Back to note</button>
 			</Link>
       <h1>My note</h1>
 			<Form
 				titleValue={note.title}
 				descriptionValue={note.description}
-				note_uuid={note_uuid}
+				uuid={uuid}
 				isCreating={false}
 			/>
     </div>
