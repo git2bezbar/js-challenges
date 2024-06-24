@@ -1,4 +1,4 @@
-import { test } from '@playwright/test';
+import { test, expect } from '@playwright/test';
 
 test.beforeEach(async ({ context }) => {
 	await context.route('https://api.freecurrencyapi.com/v1/currencies*', async (route) => {
@@ -59,4 +59,5 @@ test('should convert 92 € to $', async ({ page }) => {
 	await page.locator('[name="target-currency"]').selectOption({ label: 'US Dollar' });
 	await page.locator('[type="submit"]').click();
 	await page.waitForTimeout(1000);
+	await expect(page.getByTestId('resultContainer')).toHaveText('92 € = 98.46 $');
 });

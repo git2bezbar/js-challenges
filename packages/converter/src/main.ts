@@ -41,7 +41,7 @@ if (!!amountInput && !!baseCurrencySelect && !!targetCurrencySelect && !!submitB
 				firstCard.insertAdjacentHTML('afterend',
 					`
 					<article>
-						<h3 class="text-center">${ resultText }<h3>
+						<h3 class="text-center" data-testid="resultContainer">${ resultText }<h3>
 					</article>
 					`
 				);
